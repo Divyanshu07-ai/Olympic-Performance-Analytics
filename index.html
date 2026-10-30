@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Olympic Performance Analytics | Summer &amp; Winter Games, 1896&ndash;2026</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="lane-field" aria-hidden="true"></div>
+
+<div class="overlay" id="loadingOverlay">
+  <div class="overlay-inner">
+    <span class="overlay-rings" aria-hidden="true">
+      <img src="assets/olympic-rings-icon.png" alt="" class="rings-img">
+    </span>
+    <p>Loading dashboard&hellip;</p>
+  </div>
+</div>
+
+<div class="app">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-rings" aria-hidden="true">
+        <img src="assets/olympic-rings-icon.png" alt="" class="rings-img">
+      </span>
+      <div class="brand-text">
+        <span class="brand-eyebrow">Sports Intelligence</span>
+        <h1 class="brand-title">Olympic<br>Performance<br>Analytics</h1>
+      </div>
+    </div>
+
+    <div class="season-toggle" role="group" aria-label="Season">
+      <button type="button" data-season="summer">Summer</button>
+      <button type="button" data-season="winter">Winter</button>
+    </div>
+
+    <nav class="lanes" role="tablist" aria-label="Report sections">
+      <button class="lane" data-target="home" role="tab" aria-selected="true">
+        <span class="lane-num">&#8226;</span>
+        <span class="lane-label">Home</span>
+      </button>
+      <div class="lanes-divider" aria-hidden="true"></div>
+      <button class="lane" data-target="medal-tally" role="tab" aria-selected="false">
+        <span class="lane-num">01</span>
+        <span class="lane-label">Medal Tally</span>
+      </button>
+      <button class="lane" data-target="overall" role="tab" aria-selected="false">
+        <span class="lane-num">02</span>
+        <span class="lane-label">Overall Analysis</span>
+      </button>
+      <button class="lane" data-target="country" role="tab" aria-selected="false">
+        <span class="lane-num">03</span>
+        <span class="lane-label">Country&#8209;wise Analysis</span>
+      </button>
+      <button class="lane" data-target="athlete" role="tab" aria-selected="false">
+        <span class="lane-num">04</span>
+        <span class="lane-label">Athlete&#8209;wise Analysis</span>
+      </button>
+      <button class="lane" data-target="sports" role="tab" aria-selected="false"><span class="lane-num">05</span><span class="lane-label">Sports &amp; Events</span></button>
+      <button class="lane" data-target="hosts" role="tab" aria-selected="false"><span class="lane-num">06</span><span class="lane-label">Hosts &amp; Cities</span></button>
+      <button class="lane" data-target="season-compare" role="tab" aria-selected="false"><span class="lane-num">07</span><span class="lane-label">Summer vs Winter</span></button>
+      <button class="lane" data-target="records" role="tab" aria-selected="false"><span class="lane-num">08</span><span class="lane-label">Records &amp; Milestones</span></button>
+    </nav>
+
+    <div class="sidebar-foot">
+      <p>Data rebuilt for 1896&ndash;2026, including Paris 2024 Summer and Milano Cortina 2026 Winter.</p>
+    </div>
+  </aside>
+
+  <!-- ============ MOBILE TOPBAR ============ -->
+  <div class="topbar">
+    <div class="topbar-title">Olympic Performance Analytics</div>
+    <button class="topbar-toggle" id="menuToggle" aria-label="Open menu">&#9776;</button>
+  </div>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+
+    <!-- ---------- SECTION: HOME ---------- -->
+    <section class="view" id="home">
+      <div class="hero-wrap">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="hero-flex">
+          <div class="hero">
+            <span class="eyebrow">Olympic Performance Analytics · 1896&ndash;2026</span>
+            <h1 class="hero-title">130 years of the<br>Olympic <span class="hero-accent">Games</span>,<br>explored.</h1>
+            <p class="hero-sub">Every athlete, every medal, every edition of the modern Olympics —
+              sliced by nation, sport, age, and body. Switch between Summer and Winter, then explore medals, countries, athletes and events.</p>
+          </div>
+          <div class="scoreboard hero-scoreboard" id="homeScoreboard"></div>
+        </div>
+      </div>
+
+      <div class="insights-panel panel" id="homeInsights"></div>
+      <div class="lane-section-head">
+        <span class="eyebrow">Dive in</span>
+        <h2 class="lane-section-title">Eight ways to explore the data</h2>
+      </div>
+      <div class="lane-cards" id="homeLaneCards">
+        <button class="lane-card" data-target="medal-tally"><span class="lane-card-watermark" aria-hidden="true">01</span>
+          <span class="lane-card-icon icon-gold" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 4h8v4a4 4 0 0 1-8 0V4Z"/><path d="M8 6H5v2a4 4 0 0 0 4 4M16 6h3v2a4 4 0 0 1-4 4M12 12v4M8 20h8M9 16h6"/></svg></span>
+          <span class="lane-card-num">01</span><h3>Medal Tally</h3><p>Rank nations by gold, silver, bronze and total medals.</p><span class="lane-card-arrow" aria-hidden="true">&#8594;</span>
+        </button>
+        <button class="lane-card" data-target="overall"><span class="lane-card-watermark" aria-hidden="true">02</span>
+          <span class="lane-card-icon icon-teal" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h17"/><path d="m7 15 4-4 3 2 5-6"/></svg></span>
+          <span class="lane-card-num">02</span><h3>Overall Analysis</h3><p>Track participation, events, athletes and historical patterns.</p><span class="lane-card-arrow" aria-hidden="true">&#8594;</span>
+        </button>
+        <button class="lane-card" data-target="country"><span class="lane-card-watermark" aria-hidden="true">03</span>
+          <span class="lane-card-icon icon-blue" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.8 9h16.4M3.8 15h16.4M12 3.5c2.2 2.3 3.3 5.1 3.3 8.5S14.2 18.2 12 20.5M12 3.5c-2.2 2.3-3.3 5.1-3.3 8.5s1.1 6.2 3.3 8.5"/></svg></span>
+          <span class="lane-card-num">03</span><h3>Country-wise Analysis</h3><p>Follow a nation’s Olympic performance across editions.</p><span class="lane-card-arrow" aria-hidden="true">&#8594;</span>
+        </button>
+        <button class="lane-card" data-target="athlete"><span class="lane-card-watermark" aria-hidden="true">04</span>
+          <span class="lane-card-icon icon-pink" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.5"/><path d="M8.5 21v-3.5l2.1-4.1M15.5 21v-3.5l-2.1-4.1M9.8 10.2 7 12.5M14.2 10.2 17 12.5M10.6 8.8h2.8"/></svg></span>
+          <span class="lane-card-num">04</span><h3>Athlete-wise Analysis</h3><p>Explore athlete age, medals, body metrics and participation.</p><span class="lane-card-arrow" aria-hidden="true">&#8594;</span>
+        </button>
+        <button class="lane-card" data-target="sports"><span class="lane-card-watermark" aria-hidden="true">05</span>
+          <span class="lane-card-icon icon-orange" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M7 7.5c2.5 1.2 5.2 1.4 8.2.6M6.2 15.7c2.2-1.4 4.8-1.9 8.1-1.2M10 3.8c1.3 2 1.8 4.2 1.4 6.8M17.6 6.1c-1.7 1.8-2.5 4.1-2.2 6.8M12 15.5c.9 1.6 1.2 3.2.8 4.7"/></svg></span>
+          <span class="lane-card-num">05</span><h3>Sports &amp; Events</h3><p>Discover which sports and events shaped Olympic history.</p><span class="lane-card-arrow" aria-hidden="true">&#8594;</span>
+        </button>
+        <button class="lane-card" data-target="hosts"><span class="lane-card-watermark" aria-hidden="true">06</span>
+          <span class="lane-card-icon icon-cyan" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 20s6-5.2 6-10.2a6 6 0 1 0-12 0C6 14.8 12 20 12 20Z"/><circle cx="12" cy="9.8" r="2"/><path d="M3.5 20.5h17"/></svg></span>
+          <span class="lane-card-num">06</span><h3>Hosts &amp; Cities</h3><p>Explore host cities and how the Olympic map evolved.</p><span class="lane-card-arrow" aria-hidden="true">&#8594;</span>
+        </button>
+        <button class="lane-card" data-target="season-compare"><span class="lane-card-watermark" aria-hidden="true">07</span>
+          <span class="lane-card-icon icon-violet" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 8h13M5 8l3-3M5 8l3 3M19 16H6M19 16l-3-3M19 16l-3 3"/></svg></span>
+          <span class="lane-card-num">07</span><h3>Summer vs Winter</h3><p>Compare the two Olympic seasons across key metrics.</p><span class="lane-card-arrow" aria-hidden="true">&#8594;</span>
+        </button>
+        <button class="lane-card" data-target="records"><span class="lane-card-watermark" aria-hidden="true">08</span>
+          <span class="lane-card-icon icon-silver" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3.5 14 8l4.8.5-3.6 3.1 1 4.7-4.2-2.5-4.2 2.5 1-4.7-3.6-3.1L10 8l2-4.5Z"/><path d="M8 20h8M10 17.5h4"/></svg></span>
+          <span class="lane-card-num">08</span><h3>Records &amp; Milestones</h3><p>Surface the biggest medal and athlete milestones.</p><span class="lane-card-arrow" aria-hidden="true">&#8594;</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ---------- SECTION: MEDAL TALLY ---------- -->
+    <section class="view" id="medal-tally" hidden>
+      <header class="view-head">
+        <span class="eyebrow">Lane 01</span>
+        <h2 id="medalTallyTitle">Overall Tally</h2>
+        <p class="view-sub">Every medal in the selected season, sliced by edition and nation.</p>
+      </header>
+
+      <div class="controls">
+        <label class="field">
+          <span>Year</span>
+          <select id="yearSelect"></select>
+        </label>
+        <label class="field">
+          <span>Country</span>
+          <select id="countrySelect"></select>
+        </label>
+        <label class="field field-inline">
+          <span>Search</span>
+          <input type="search" id="medalSearch" placeholder="Search nations…" autocomplete="off">
+        </label>
+      </div>
+
+      <div class="panel">
+        <div class="table-wrap">
+          <table class="medal-table" id="medalTable">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Nation</th>
+                <th class="col-gold">Gold</th>
+                <th class="col-silver">Silver</th>
+                <th class="col-bronze">Bronze</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- SECTION: OVERALL ANALYSIS ---------- -->
+    <section class="view" id="overall" hidden>
+      <header class="view-head">
+        <span class="eyebrow">Lane 02</span>
+        <h2>Top Statistics</h2>
+        <p class="view-sub">1896&ndash;2026 Olympic history, at a glance.</p>
+      </header>
+
+      <div class="scoreboard" id="scoreboard"></div>
+
+      <div class="chart-grid">
+        <div class="panel chart-panel">
+          <h3>Participating nations over the years</h3>
+          <canvas id="chartNations"></canvas>
+        </div>
+        <div class="panel chart-panel">
+          <h3>Events over the years</h3>
+          <canvas id="chartEvents"></canvas>
+        </div>
+        <div class="panel chart-panel">
+          <h3>Athletes over the years</h3>
+          <canvas id="chartAthletes"></canvas>
+        </div>
+      </div>
+
+      <div class="panel chart-panel overall-participation-panel">
+        <div class="panel-kicker">01 · PARTICIPATION INTENSITY</div>
+        <h3>How many athletes represented each nation?</h3>
+        <p class="panel-sub">Average athlete footprint per participating nation, by Olympic edition. This reveals participation depth without repeating the Sports &amp; Events programme heatmap.</p>
+        <canvas id="chartParticipationIntensity"></canvas>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head-row">
+          <h3>Most successful athletes</h3>
+          <div class="panel-head-controls">
+            <label class="field field-inline">
+              <span>Search</span>
+              <input type="search" id="successSearch" placeholder="Search athlete or nation…" autocomplete="off">
+            </label>
+            <label class="field field-inline">
+              <span>Sport</span>
+              <select id="successSportSelect"></select>
+            </label>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="successTable">
+            <thead><tr><th>Athlete</th><th>Medals</th><th>Sport</th><th>Nation</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- SECTION: COUNTRY-WISE ---------- -->
+    <section class="view" id="country" hidden>
+      <header class="view-head">
+        <span class="eyebrow">Lane 03</span>
+        <h2 id="countryHeading">Country&#8209;wise Analysis</h2>
+        <p class="view-sub">Pick a nation to trace its Olympic story.</p>
+      </header>
+
+      <div class="controls">
+        <label class="field">
+          <span>Country</span>
+          <select id="countryOnlySelect"></select>
+        </label>
+        <label class="field">
+          <span>Compare with</span>
+          <select id="compareSelect"></select>
+        </label>
+      </div>
+
+      <div class="panel chart-panel">
+        <h3 id="countryLineTitle">Medal tally over the years</h3>
+        <canvas id="chartCountryLine"></canvas>
+      </div>
+
+      <div class="panel">
+        <h3 id="countryHeatTitle">Sports strength map</h3>
+        <p class="panel-sub">Medals won per sport, per edition.</p>
+        <div class="heatmap-wrap" id="heatmapCountry"></div>
+      </div>
+
+      <div class="panel">
+        <h3 id="countryTopTitle">Top 10 athletes</h3>
+        <label class="field field-inline" style="margin-bottom:14px;">
+          <span>Search</span>
+          <input type="search" id="countryTopSearch" placeholder="Search athletes…" autocomplete="off">
+        </label>
+        <div class="table-wrap">
+          <table class="data-table" id="countryTopTable">
+            <thead><tr><th>Athlete</th><th>Medals</th><th>Sport</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- SECTION: ATHLETE-WISE ---------- -->
+    <!-- ---------- SECTION: SPORTS & EVENTS ---------- -->
+    <section class="view" id="sports" hidden>
+      <header class="view-head editorial-head"><span class="eyebrow">Lane 05 · Programme</span><h2>Sports &amp; Events</h2><p class="view-sub">Follow the Olympic programme through the decades — from iconic disciplines to the changing scale of event competition.</p></header>
+      <div class="story-hero" id="sportsStory"></div>
+      <div class="scoreboard editorial-scoreboard" id="sportsSummary"></div>
+      <div class="spot-grid" id="sportsSpotlight"></div>
+      <div class="sports-analysis-stack">
+        <section class="panel chart-panel feature-panel sports-volume-panel">
+          <div class="panel-kicker">01 · VOLUME</div>
+          <h3>Which sports carry the most events?</h3>
+          <p class="panel-sub">Cumulative event volume across every edition in the selected season.</p>
+          <canvas id="chartSportsTop"></canvas>
+        </section>
+
+        <section class="panel feature-panel sports-evolution-panel">
+          <div class="panel-kicker">02 · EVOLUTION</div>
+          <h3>How the programme changed</h3>
+          <p class="panel-sub">Darker cells indicate more events in that sport and year.</p>
+          <div class="heatmap-wrap" id="heatmapSports"></div>
+        </section>
+      </div>
+      <div class="insight-banner" id="sportsInsight"></div>
+    </section>
+
+    <!-- ---------- SECTION: HOSTS & CITIES ---------- -->
+    <section class="view" id="hosts" hidden>
+      <header class="view-head editorial-head"><span class="eyebrow">Lane 06 · The Olympic map</span><h2>Hosts &amp; Cities</h2><p class="view-sub">The Games are more than a venue. They leave a geographic signature — returning cities, new frontiers and a timeline that spans generations.</p></header>
+      <div class="scoreboard editorial-scoreboard" id="hostsSummary"></div>
+      <div class="host-feature" id="hostFeature"></div>
+      <div class="chart-grid editorial-grid hosts-visual-grid">
+        <div class="panel chart-panel feature-panel"><div class="panel-kicker">01 · RETURNING CITIES</div><h3>Most frequent host cities</h3><p class="panel-sub">Cities that have appeared most often in the selected season.</p><canvas id="chartHostCities"></canvas></div>
+      </div>
+      <div class="panel timeline-table-panel host-archive-panel">
+        <div class="panel-head-row"><div><div class="panel-kicker">02 · HOST ARCHIVE</div><h3>The complete host journey</h3><p class="panel-sub">One searchable-style archive of every edition, city and season in the selected dataset.</p></div><span class="host-table-count" id="hostTableCount"></span></div>
+        <div class="table-wrap host-table-wrap"><table class="medal-table host-table" id="hostTable"><thead><tr><th>#</th><th>Year</th><th>Edition</th><th>Host city</th></tr></thead><tbody></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ---------- SECTION: SUMMER VS WINTER ---------- -->
+    <section class="view" id="season-compare" hidden>
+      <header class="view-head editorial-head"><span class="eyebrow">Lane 07 · Two Olympic worlds</span><h2>Summer vs Winter</h2><p class="view-sub">Same Olympic spirit, different scale. Compare the two seasons across editions, sports, events, athletes and nations.</p></header>
+      <div class="compare-intro"><div><span class="story-kicker">THE BIG PICTURE</span><h3>Two seasons. One Olympic story.</h3><p>Summer has the longer history and broader programme; Winter adds a distinct competitive world built around snow, ice and specialised disciplines.</p></div><span class="compare-symbol">S<br><i>VS</i><b>W</b></span></div>
+      <div class="compare-grid" id="seasonCompareCards"></div>
+      <div class="ratio-grid" id="seasonInsights"></div>
+      <div class="season-chart-stack">
+        <div class="panel chart-panel feature-panel season-scale-panel"><div class="panel-kicker">03 · PROGRAMME SCALE</div><h3>Editions, sports &amp; nations</h3><p class="panel-sub">A focused scale makes the smaller archive dimensions readable without being flattened by athlete counts.</p><canvas id="chartSeasonSmall"></canvas></div>
+        <div class="panel chart-panel feature-panel season-scale-panel"><div class="panel-kicker">04 · LARGE-SCALE RECORDS</div><h3>Events &amp; athletes</h3><p class="panel-sub">A separate scale keeps both high-volume measures visible and comparable.</p><canvas id="chartSeasonLarge"></canvas></div>
+      </div>
+      <div class="insight-banner season-banner"><span class="insight-mark">✦</span><div><strong>Coverage</strong><p>Summer runs from 1896 through Paris 2024; Winter runs from 1924 through Milano Cortina 2026. Each comparison card now stands on its own, while the charts use two scales so no metric disappears against the largest values.</p></div></div>
+    </section>
+
+    <!-- ---------- SECTION: RECORDS & MILESTONES ---------- -->
+    <section class="view" id="records" hidden>
+      <header class="view-head editorial-head"><span class="eyebrow">Lane 08 · The record book</span><h2>Records &amp; Milestones</h2><p class="view-sub">The selected Olympic season only — standout athletes, nation achievements and edition-scale milestones.</p></header>
+      <div class="records-grid" id="recordsGrid"></div>
+      <div class="panel milestone-panel"><div class="panel-head-row"><div><div class="panel-kicker">01 · THROUGH THE YEARS</div><h3>Milestones on the Olympic timeline</h3></div><span class="panel-sub">1896 → 2026</span></div><div class="milestone-timeline" id="milestoneTimeline"></div></div>
+      <div class="panel feature-panel"><div class="panel-kicker">02 · RECORD INDEX</div><h3>Season record index</h3><p class="panel-sub">A compact record book for the currently selected season — no cross-season results are mixed in.</p><div class="table-wrap"><table class="medal-table" id="recordsTable"><thead><tr><th>Record</th><th>Holder</th><th>Year</th><th>Value</th><th>Context</th></tr></thead><tbody></tbody></table></div></div>
+      <div class="insight-banner" id="recordsClosing"></div>
+    </section>
+
+    <section class="view" id="athlete" hidden>
+      <header class="view-head">
+        <span class="eyebrow">Lane 04</span>
+        <h2>Athlete&#8209;wise Analysis</h2>
+        <p class="view-sub">Who competes, at what age, and what they're built like.</p>
+      </header>
+
+      <div class="panel chart-panel">
+        <h3>Distribution of age</h3>
+        <canvas id="chartAge"></canvas>
+      </div>
+
+      <div class="chart-grid chart-grid-2">
+        <div class="panel chart-panel chart-panel-fixed">
+          <h3>Oldest gold&#8209;medal sports</h3>
+          <p class="panel-sub">Average age of gold medalists, highest first.</p>
+          <canvas id="chartAgeSportOld"></canvas>
+        </div>
+        <div class="panel chart-panel chart-panel-fixed">
+          <h3>Youngest gold&#8209;medal sports</h3>
+          <p class="panel-sub">Average age of gold medalists, lowest first.</p>
+          <canvas id="chartAgeSportYoung"></canvas>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head-row">
+          <h3>Height vs. weight</h3>
+          <label class="field field-inline">
+            <span>Sport</span>
+            <select id="hwSportSelect"></select>
+          </label>
+        </div>
+        <div class="chart-panel-fixed">
+          <canvas id="chartHeightWeight"></canvas>
+        </div>
+        <div class="legend-row" id="hwLegend"></div>
+      </div>
+
+      <div class="panel chart-panel">
+        <h3>Men vs. women participation</h3>
+        <canvas id="chartGender"></canvas>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="data.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/home.js"></script>
+<script src="js/medal-tally.js"></script>
+<script src="js/overall.js"></script>
+<script src="js/country.js"></script>
+<script src="js/athlete.js"></script>
+<script src="js/extended.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
